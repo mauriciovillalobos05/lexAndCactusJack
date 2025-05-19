@@ -10,23 +10,34 @@ int yylex(void);
     int num;
 }
 
-%token POLITE TURN MOVE FORWARD BLOCKS
-%token <num> NUMBER DEGREE
+%token POLITE TURN MOVE FORWARD BLOCKS DEGREES
+%token <num> NUMBER
 %type <num> command turn_cmd move_cmd
 
 %%
 
 command:
-      POLITE turn_cmd    { printf("Valid turn command\n"); }
-    | POLITE move_cmd    { printf("Valid move command\n"); }
+      POLITE turn_cmd    { printf(" Valid turn command\n"); }
+    | POLITE move_cmd    { printf(" Valid move command\n"); }
     ;
 
 turn_cmd:
-    TURN DEGREE DEGREES   { printf("Turn: %d degrees\n", $2); }
+    TURN NUMBER DEGREES
+    {
+        if ($2 == 90 || $2 == 180 || $2 == 270) {
+            printf("Turn: %d degrees\n", $2);
+        } else {
+            yyerror(" Invalid turn angle. Use 90, 180, or 270 only.");
+            YYABORT;
+        }
+    }
     ;
 
 move_cmd:
-    MOVE NUMBER BLOCKS FORWARD { printf("Move: %d blocks forward\n", $2); }
+    MOVE NUMBER BLOCKS FORWARD
+    {
+        printf("Move: %d blocks forward\n", $2);
+    }
     ;
 
 %%
