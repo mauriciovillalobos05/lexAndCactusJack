@@ -1,25 +1,30 @@
 %{
 #include "y.tab.h"
+#include <stdlib.h>
 %}
 
 %%
-[pP]lease              { return POLITE; }
-[kK]indly              { return POLITE; }
+
+[Pp]lease              { return POLITE; }
+[Kk]indly              { return POLITE; }
 [Cc]ould[ \t]+you      { return POLITE; }
 
-[tT]urn                { return TURN; }
-[mM]ove                { return MOVE; }
+[Tt]urn                { return TURN; }
+[Mm]ove                { return MOVE; }
 
 [1-9][0-9]*            { yylval.num = atoi(yytext); return NUMBER; }
 
-90|180|270             { yylval.num = atoi(yytext); return DEGREE; }
+[Bb]locks              { return BLOCKS; }
+[Ff]orward             { return FORWARD; }
 
-[bB]locks              { return BLOCKS; }
-[fF]orward             { return FORWARD; }
-
-[dD]egrees             { return DEGREES; }
+[Dd]egrees             { return DEGREES; }
 
 [ \t\n]+               ;  // Ignore whitespace
 
 .                      { printf("Invalid character: %s\n", yytext); }
+
 %%
+
+int yywrap() {
+    return 1;
+}
