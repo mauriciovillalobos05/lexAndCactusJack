@@ -17,16 +17,30 @@ class Robot:
 
     def direction(self):
         return DIRECTIONS[self.direction_index]
+    
+    def is_valid_move(self, blocks):
+        # Simulate new position
+        dx, dy = 0, 0
+        if self.direction() == 'N': dy = blocks
+        elif self.direction() == 'S': dy = -blocks
+        elif self.direction() == 'E': dx = blocks
+        elif self.direction() == 'W': dx = -blocks
+
+        new_x = self.x + dx
+        new_y = self.y + dy
+
+        return 0 <= new_x < GRID_SIZE and 0 <= new_y < GRID_SIZE
 
     def move(self, blocks):
-        if self.direction() == 'N':
-            self.y = min(GRID_SIZE - 1, self.y + blocks)
-        elif self.direction() == 'S':
-            self.y = max(0, self.y - blocks)
-        elif self.direction() == 'E':
-            self.x = min(GRID_SIZE - 1, self.x + blocks)
-        elif self.direction() == 'W':
-            self.x = max(0, self.x - blocks)
+        if self.is_valid_move(blocks):  # <-- Fixed here
+            if self.direction() == 'N':
+                self.y += blocks
+            elif self.direction() == 'S':
+                self.y -= blocks
+            elif self.direction() == 'E':
+                self.x += blocks
+            elif self.direction() == 'W':
+                self.x -= blocks
 
     def turn(self, degrees):
         steps = (degrees // 90) % 4
