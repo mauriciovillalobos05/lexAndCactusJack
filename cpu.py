@@ -1,66 +1,60 @@
-import csv
-import numpy as np
+GRID_SIZE = 10
 
-# Tablero 10x10
-map_field = np.zeros(shape=(10, 10), dtype=int)
-
-# Direcciones como vectores (N, E, S, O)
-DIRECTIONS = ['N', 'E', 'S', 'W']
-DIR_VECTORS = {'N': (-1, 0), 'E': (0, 1), 'S': (1, 0), 'W': (0, -1)}
-
-class Robot:
+class CPU:
     def __init__(self):
         self.x = 0
         self.y = 0
-        self.direction = 'N'
+        self.angle = 0
+        self.state_log = []
 
-    def turn(self, degrees):
-        # Turn right in steps of 90 degrees
-        steps = (degrees // 90) % 4
-        current_idx = DIRECTIONS.index(self.direction)
-        self.direction = DIRECTIONS[(current_idx + steps) % 4]
-        print(f"Turned {degrees} degrees. Now facing {self.direction}.")
+    def reset(self):
+        self.x = 0
+        self.y = 0
+        self.angle = 0
+        self.state_log.clear()
 
-    def move_forward(self, blocks):
-        dx, dy = DIR_VECTORS[self.direction]
-        for _ in range(blocks):
+    def get_state(self):
+        return (self.x, self.y, self.angle)
+
+    def execute(self, ast):
+        if ast["type"] == "STMT":
+            for ins in ast["children"]:
+                self.execute(ins)
+        elif ast["type"] == "INS":
+            self._execute_instruction(ast)
+
+    def _execute_instruction(self, ins_node):
+        ins_type = ins_node["ins_type"]
+        value = ins_node["value"]
+
+        if ins_type == "INS_MOVE":
+            dx, dy = self._get_move_offset(value)
             new_x = self.x + dx
             new_y = self.y + dy
-            if 0 <= new_x < 10 and 0 <= new_y < 10:
+
+            if 0 <= new_x < GRID_SIZE and 0 <= new_y < GRID_SIZE:
                 self.x = new_x
                 self.y = new_y
-                map_field[self.x][self.y] = 1  # Marca paso del robot
             else:
-                print("Move ignored: out of bounds.")
-                break
-        print(f"Moved {blocks} blocks forward to ({self.x}, {self.y})")
+                print(f"Ignoring move out of bounds: ({new_x}, {new_y})")
 
-def do_instruction(robot, inst):
-    command = inst[0].strip().lower()
-    if "turn" in command:
-        degrees = int(command.split()[-2])  # Assumes: "turn 90 degrees"
-        robot.turn(degrees)
-    elif "move" in command:
-        blocks = int(command.split()[-3])  # Assumes: "move 3 blocks forward"
-        robot.move_forward(blocks)
-    else:
-        print(f"Unknown instruction: {inst}")
+        elif ins_type == "INS_ROTATE":
+            if value in [90, 180, 270]:
+                self.angle = (self.angle + value) % 360
+            else:
+                print(f"Invalid rotation angle: {value}")
 
-def read_file():
-    inst_list = []
-    with open('instructions.asm') as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
-            inst_list.append(row)
-    return inst_list
+        self.state_log.append(self.get_state())
 
-def main():
-    print("=== Starting Robot Simulation ===")
-    robot = Robot()
-    inst_list = read_file()
-    for inst in inst_list:
-        do_instruction(robot, inst)
-        print(map_field)
-
-if __name__ == "__main__":
-    main()
+    def _get_move_offset(self, blocks):
+        angle = self.angle % 360
+        if angle == 0:
+            return (0, -blocks)
+        elif angle == 90:
+            return (blocks, 0)
+        elif angle == 180:
+            return (0, blocks)
+        elif angle == 270:
+            return (-blocks, 0)
+        else:
+            return (0, 0)

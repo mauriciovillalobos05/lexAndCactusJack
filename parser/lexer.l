@@ -13,7 +13,7 @@
 "move"                           { return INS_MOVE_VERB; }
 
 "deg"|"degrees"                  { return ARG_DEGREES_UNIT; }
-"blocks"                         { return ARG_BLOCKS_UNIT; }
+"block"s?                        { return ARG_BLOCKS_UNIT; }
 
 [0-9]+                           { yylval.ival = atoi(yytext); return INT_L; }
 [0-9]+"."[0-9]*|[0-9]*"."[0-9]+  { yylval.rval = strtof(yytext, NULL); return REAL_L; }

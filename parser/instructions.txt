@@ -1,2 +1,4 @@
 Robot please rotate 90 degrees, and then move 5 blocks.
 Robot please rotate 90 degrees, and then move 2 blocks.
+Robot please rotate 90 degrees.
+Robot please move 1 block.

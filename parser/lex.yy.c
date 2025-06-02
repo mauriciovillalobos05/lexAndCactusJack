@@ -1,6 +1,5 @@
-#line 1 "lex.yy.c"
 
-#line 3 "lex.yy.c"
+#line 2 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -369,7 +368,7 @@ static const flex_int16_t yy_accept[87] =
         9,   13,    9,    8,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,   13,    9,    0,    0,    6,    0,
         0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    5,    0,    0,    0,    0,    0,    0,    1,    0,
+        0,    5,    0,    0,    0,    0,    0,    0,    1,    7,
         0,    0,    0,    0,    0,    0,    3,    7,    0,    2,
         4,    0,    0,    6,    0,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0
@@ -497,8 +496,8 @@ char *yytext;
 #include "parser.tab.h"
 #include <stdlib.h>
 #include <string.h>
+#line 499 "lex.yy.c"
 #line 500 "lex.yy.c"
-#line 501 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -717,7 +716,7 @@ YY_DECL
 	{
 #line 7 "lexer.l"
 
-#line 720 "lex.yy.c"
+#line 719 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -850,7 +849,7 @@ YY_RULE_SETUP
 #line 27 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 853 "lex.yy.c"
+#line 852 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
