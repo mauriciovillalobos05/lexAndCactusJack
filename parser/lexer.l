@@ -9,7 +9,7 @@
 "please"|"kindly"|"would you please" { return POLITE_WORDS; }
 ", and then"|", then"            { return INS_CONJUNCTION; }
 
-"rotate"                         { return INS_ROTATE_VERB; }
+"rotate"|"turn"                         { return INS_ROTATE_VERB; }
 "move"                           { return INS_MOVE_VERB; }
 
 "deg"|"degrees"                  { return ARG_DEGREES_UNIT; }
