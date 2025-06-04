@@ -103,6 +103,9 @@ USAGE INSTRUCTIONS
 ------------------
 1. Install packages: pip install -r requirements.txt
 
+To visualize the machine state diagram run
+1. python cpu_dfa_diagram.py
+
 The following commands should be executed inside parser folder
 
 1. Compile:
