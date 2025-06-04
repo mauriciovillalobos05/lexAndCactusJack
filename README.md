@@ -80,7 +80,7 @@ VALID INPUT EXAMPLES
 ✓ Robot kindly rotate 90 degrees.
 ✓ Robot would you please move 3 blocks, then turn 180 degrees, and then move 1 block.
 
-**NOTE** You should have instructions with '.' at the end of each of them.
+*NOTE* You should have instructions with '.' at the end of each of them.
 INVALID INPUT EXAMPLES
 ----------------------
 ✗ Robot moves 2 blocks            → missing polite form
@@ -93,7 +93,9 @@ INVALID INPUT EXAMPLES
 
 USAGE INSTRUCTIONS
 ------------------
-This commands should be executed inside parser folder
+1. Install packages: pip install -r requirements.txt
+
+The following commands should be executed inside parser folder
 
 1. Compile:
    make
