@@ -1,25 +1,31 @@
 import graphviz
 
-def cpu_logic_dfa():
-    dot = graphviz.Digraph("CPU_DFA")
+def improved_cpu_dfa():
+    dot = graphviz.Digraph("Improved_CPU_DFA")
     
-    # States
-    dot.node("S0", "Start / Idle")
-    dot.node("S1", "Rotating")
-    dot.node("S2", "Moving")
-    dot.node("E", "Error / Out of Bounds")
+    # Estados
+    dot.node("IDLE", "Idle / Waiting")
+    dot.node("ROTATE", "Rotating")
+    dot.node("MOVE", "Moving")
+    dot.node("DONE", "Instruction Completed")
+    dot.node("ERROR", "Error")
 
-    # Transitions
-    dot.edge("S0", "S1", label="ROTATE(90|180|270)")
-    dot.edge("S1", "S0", label="Complete Rotation")
-    dot.edge("S0", "S2", label="MOVE(n) within bounds")
-    dot.edge("S2", "S0", label="Complete Move")
-    
-    # Errors
-    dot.edge("S0", "E", label="Invalid ROTATE angle")
-    dot.edge("S0", "E", label="MOVE out of bounds")
+    # Transiciones válidas
+    dot.edge("IDLE", "ROTATE", label="Rotate: 90|180|270")
+    dot.edge("ROTATE", "IDLE", label="Complete Rotation")
+
+    dot.edge("IDLE", "MOVE", label="Move: n (in bounds)")
+    dot.edge("MOVE", "IDLE", label="Complete Move")
+
+    dot.edge("IDLE", "DONE", label="Instruction completed")
+
+    # Manejo de errores
+    dot.edge("IDLE", "ERROR", label="Rotate: invalid angle")
+    dot.edge("IDLE", "ERROR", label="Move: out of bounds")
+    dot.edge("MOVE", "ERROR", label="Move: out of bounds")
+    dot.edge("IDLE", "ERROR", label="Unknown instruction")
 
     return dot
 
-dfa = cpu_logic_dfa()
-dfa.render("cpu_dfa", format="png", view=True)
+dfa = improved_cpu_dfa()
+dfa.render("improved_cpu_dfa", format="png", view=True)
