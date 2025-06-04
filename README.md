@@ -71,6 +71,7 @@ The included `cpu.py` simulates robot execution on a 10x10 grid:
 - Visualizes movements and rotations
 - Detects and blocks out-of-bound moves
 - Receives parsed instructions as input
+- Generates png images inside parser folder to illustrate the robot movements.
 
 ------------------------------------------------------------
 
