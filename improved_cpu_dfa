@@ -1,0 +1,16 @@
+digraph Improved_CPU_DFA {
+	IDLE [label="Idle / Waiting"]
+	ROTATE [label=Rotating]
+	MOVE [label=Moving]
+	DONE [label="Instruction Completed"]
+	ERROR [label=Error]
+	IDLE -> ROTATE [label="Rotate: 90|180|270"]
+	ROTATE -> IDLE [label="Complete Rotation"]
+	IDLE -> MOVE [label="Move: n (in bounds)"]
+	MOVE -> IDLE [label="Complete Move"]
+	IDLE -> DONE [label="Instruction completed"]
+	IDLE -> ERROR [label="Rotate: invalid angle"]
+	IDLE -> ERROR [label="Move: out of bounds"]
+	MOVE -> ERROR [label="Move: out of bounds"]
+	IDLE -> ERROR [label="Unknown instruction"]
+}
