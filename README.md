@@ -7,8 +7,8 @@ This project implements a lexical and syntactic analyzer capable of understandin
 natural language commands directed to a robot. The system processes structured 
 instructions like:
 
-- "Robot please move 2 blocks ahead"
-- "Robot please move 3 blocks ahead and then turn 90 degrees, then move 2 blocks"
+- "Robot please move 2 blocks ahead."
+- "Robot please move 3 blocks ahead and then turn 90 degrees, then move 2 blocks."
 
 And correctly rejects malformed instructions such as:
 
@@ -27,16 +27,15 @@ Implemented using Flex (lexer.l), the lexical analyzer identifies the following 
 
 - NOUN: "Robot", "robot"
 - KIND WORDS: "please", "kindly", "would you please"
+- CONJUNCTIONS: ", and then", ", then"
 - VERBS:
   - INS_ROTATE_VERB: "rotate", "turn"
   - INS_MOVE_VERB: "move"
 - UNITS:
   - ARG_DEGREES_UNIT: "degrees", "deg"
   - ARG_BLOCKS_UNIT: "blocks", "block"
-- INSTRUCTION CONJUNCTIONS: ", and then", ", then"
 - NUMERIC LITERALS:
   - INT_L: Integer values
-  - REAL_L: Decimal values
 - COMMENTS: Lines starting with `//` are ignored
 - ERROR HANDLING: Unexpected characters are reported with line number
 
@@ -67,7 +66,7 @@ SEMANTIC CONSTRAINTS:
 
 VISUALIZER
 ----------
-The included `visualizer.py` simulates robot execution on a 10x10 grid:
+The included `cpu.py` simulates robot execution on a 10x10 grid:
 - Tracks position and direction (N, E, S, W)
 - Visualizes movements and rotations
 - Detects and blocks out-of-bound moves
@@ -81,6 +80,7 @@ VALID INPUT EXAMPLES
 ✓ Robot kindly rotate 90 degrees.
 ✓ Robot would you please move 3 blocks, then turn 180 degrees, and then move 1 block.
 
+**NOTE** You should have instructions with '.' at the end of each of them.
 INVALID INPUT EXAMPLES
 ----------------------
 ✗ Robot moves 2 blocks            → missing polite form
@@ -93,16 +93,16 @@ INVALID INPUT EXAMPLES
 
 USAGE INSTRUCTIONS
 ------------------
+This commands should be executed inside parser folder
+
 1. Compile:
-   flex lexer.l
-   bison -d parser.y
-   gcc lex.yy.c parser.tab.c -o robot_parser
+   make
 
 2. Run parser:
-   ./robot_parser
+   make run
 
-3. Optional: Run visualizer
-   ./robot_parser | python3 visualizer.py
+3. Optional: remove generated files
+   make clean
 
 ------------------------------------------------------------
 
@@ -110,9 +110,8 @@ FILES INCLUDED
 --------------
 - lexer.l         → Flex lexer definition
 - parser.y        → Bison parser definition
-- visualizer.py   → Python robot grid simulator
-- parser.tab.c/h  → Bison-generated files
-- lex.yy.c        → Flex-generated file
+- cpu.py          → Python robot grid simulator
+- graphviz.py     → Python machine state diagram
 - README.md       → This documentation
 
 ------------------------------------------------------------
