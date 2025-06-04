@@ -80,7 +80,10 @@ VALID INPUT EXAMPLES
 ✓ Robot kindly rotate 90 degrees.
 ✓ Robot would you please move 3 blocks, then turn 180 degrees, and then move 1 block.
 
-*NOTE* You should have instructions with '.' at the end of each of them.
+NOTE You should have instructions with '.' at the end of each of them.
+
+To change the instructions you want to try, change the file instructions.txt and run make run afterwards.
+
 INVALID INPUT EXAMPLES
 ----------------------
 ✗ Robot moves 2 blocks            → missing polite form
