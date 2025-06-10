@@ -1,0 +1,248 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statement_list
+Rule 2     statement_list -> statement_list statement
+Rule 3     statement_list -> statement
+Rule 4     statement -> NOUN POLITE instruction_seq DOT
+Rule 5     instruction_seq -> instruction
+Rule 6     instruction_seq -> instruction_seq CONJ instruction
+Rule 7     instruction -> rotate_instr
+Rule 8     instruction -> move_instr
+Rule 9     rotate_instr -> ROTATE value DEG
+Rule 10    move_instr -> MOVE value BLOCK
+Rule 11    value -> INT
+Rule 12    value -> REAL
+
+Terminals, with rules where they appear
+
+BLOCK                : 10
+CONJ                 : 6
+DEG                  : 9
+DOT                  : 4
+INT                  : 11
+MOVE                 : 10
+NOUN                 : 4
+POLITE               : 4
+REAL                 : 12
+ROTATE               : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+instruction          : 5 6
+instruction_seq      : 4 6
+move_instr           : 8
+program              : 0
+rotate_instr         : 7
+statement            : 2 3
+statement_list       : 1 2
+value                : 9 10
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statement_list
+    (2) statement_list -> . statement_list statement
+    (3) statement_list -> . statement
+    (4) statement -> . NOUN POLITE instruction_seq DOT
+
+    NOUN            shift and go to state 4
+
+    program                        shift and go to state 1
+    statement_list                 shift and go to state 2
+    statement                      shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> statement_list .
+    (2) statement_list -> statement_list . statement
+    (4) statement -> . NOUN POLITE instruction_seq DOT
+
+    $end            reduce using rule 1 (program -> statement_list .)
+    NOUN            shift and go to state 4
+
+    statement                      shift and go to state 5
+
+state 3
+
+    (3) statement_list -> statement .
+
+    NOUN            reduce using rule 3 (statement_list -> statement .)
+    $end            reduce using rule 3 (statement_list -> statement .)
+
+
+state 4
+
+    (4) statement -> NOUN . POLITE instruction_seq DOT
+
+    POLITE          shift and go to state 6
+
+
+state 5
+
+    (2) statement_list -> statement_list statement .
+
+    NOUN            reduce using rule 2 (statement_list -> statement_list statement .)
+    $end            reduce using rule 2 (statement_list -> statement_list statement .)
+
+
+state 6
+
+    (4) statement -> NOUN POLITE . instruction_seq DOT
+    (5) instruction_seq -> . instruction
+    (6) instruction_seq -> . instruction_seq CONJ instruction
+    (7) instruction -> . rotate_instr
+    (8) instruction -> . move_instr
+    (9) rotate_instr -> . ROTATE value DEG
+    (10) move_instr -> . MOVE value BLOCK
+
+    ROTATE          shift and go to state 11
+    MOVE            shift and go to state 12
+
+    instruction_seq                shift and go to state 7
+    instruction                    shift and go to state 8
+    rotate_instr                   shift and go to state 9
+    move_instr                     shift and go to state 10
+
+state 7
+
+    (4) statement -> NOUN POLITE instruction_seq . DOT
+    (6) instruction_seq -> instruction_seq . CONJ instruction
+
+    DOT             shift and go to state 13
+    CONJ            shift and go to state 14
+
+
+state 8
+
+    (5) instruction_seq -> instruction .
+
+    DOT             reduce using rule 5 (instruction_seq -> instruction .)
+    CONJ            reduce using rule 5 (instruction_seq -> instruction .)
+
+
+state 9
+
+    (7) instruction -> rotate_instr .
+
+    DOT             reduce using rule 7 (instruction -> rotate_instr .)
+    CONJ            reduce using rule 7 (instruction -> rotate_instr .)
+
+
+state 10
+
+    (8) instruction -> move_instr .
+
+    DOT             reduce using rule 8 (instruction -> move_instr .)
+    CONJ            reduce using rule 8 (instruction -> move_instr .)
+
+
+state 11
+
+    (9) rotate_instr -> ROTATE . value DEG
+    (11) value -> . INT
+    (12) value -> . REAL
+
+    INT             shift and go to state 16
+    REAL            shift and go to state 17
+
+    value                          shift and go to state 15
+
+state 12
+
+    (10) move_instr -> MOVE . value BLOCK
+    (11) value -> . INT
+    (12) value -> . REAL
+
+    INT             shift and go to state 16
+    REAL            shift and go to state 17
+
+    value                          shift and go to state 18
+
+state 13
+
+    (4) statement -> NOUN POLITE instruction_seq DOT .
+
+    NOUN            reduce using rule 4 (statement -> NOUN POLITE instruction_seq DOT .)
+    $end            reduce using rule 4 (statement -> NOUN POLITE instruction_seq DOT .)
+
+
+state 14
+
+    (6) instruction_seq -> instruction_seq CONJ . instruction
+    (7) instruction -> . rotate_instr
+    (8) instruction -> . move_instr
+    (9) rotate_instr -> . ROTATE value DEG
+    (10) move_instr -> . MOVE value BLOCK
+
+    ROTATE          shift and go to state 11
+    MOVE            shift and go to state 12
+
+    instruction                    shift and go to state 19
+    rotate_instr                   shift and go to state 9
+    move_instr                     shift and go to state 10
+
+state 15
+
+    (9) rotate_instr -> ROTATE value . DEG
+
+    DEG             shift and go to state 20
+
+
+state 16
+
+    (11) value -> INT .
+
+    DEG             reduce using rule 11 (value -> INT .)
+    BLOCK           reduce using rule 11 (value -> INT .)
+
+
+state 17
+
+    (12) value -> REAL .
+
+    DEG             reduce using rule 12 (value -> REAL .)
+    BLOCK           reduce using rule 12 (value -> REAL .)
+
+
+state 18
+
+    (10) move_instr -> MOVE value . BLOCK
+
+    BLOCK           shift and go to state 21
+
+
+state 19
+
+    (6) instruction_seq -> instruction_seq CONJ instruction .
+
+    DOT             reduce using rule 6 (instruction_seq -> instruction_seq CONJ instruction .)
+    CONJ            reduce using rule 6 (instruction_seq -> instruction_seq CONJ instruction .)
+
+
+state 20
+
+    (9) rotate_instr -> ROTATE value DEG .
+
+    DOT             reduce using rule 9 (rotate_instr -> ROTATE value DEG .)
+    CONJ            reduce using rule 9 (rotate_instr -> ROTATE value DEG .)
+
+
+state 21
+
+    (10) move_instr -> MOVE value BLOCK .
+
+    DOT             reduce using rule 10 (move_instr -> MOVE value BLOCK .)
+    CONJ            reduce using rule 10 (move_instr -> MOVE value BLOCK .)
+
